@@ -1,0 +1,43 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 24,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "debug",
+            "displayName": "STM32F407 Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-cmake/debug",
+            "toolchainFile":
+                "${sourceDir}/cmake/arm-none-eabi-toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "STM32F407 Release",
+            "inherits": "debug",
+            "binaryDir": "${sourceDir}/build-cmake/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "jobs": 12
+        },
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "jobs": 12
+        }
+    ]
+}

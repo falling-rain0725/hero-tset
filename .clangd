@@ -1,0 +1,4 @@
+CompileFlags:
+  CompilationDatabase: build-cmake/debug
+  Remove:
+    - -mthumb-interwork

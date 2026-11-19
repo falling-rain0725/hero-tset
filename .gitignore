@@ -1,0 +1,78 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+build
+./idea
+.vscode/.cortex-debug.peripherals.state.json
+.vscode/.cortex-debug.registers.state.json
+*.jdebug*
+settings.json
+ozone
+my_log
+
+# CMake / Make 构建产物
+/build/
+/build-cmake/
+
+# Ozone 本地工程和用户状态
+/ozone/
+*.jdebug
+*.jdebug.user
+
+# 本地日志和打包文件
+/my_log/
+/zip/
+
+# VS Code个人配置和调试状态
+/.vscode/settings.json
+
+.vscode/browse.vc.db*
+
+# VS Code C/C++ 插件本地配置（含本机编译器路径，勿提交）
+.vscode/c_cpp_properties.json

@@ -1,0 +1,29 @@
+{
+    // VS Code默认构建任务。按Ctrl+Shift+B执行mingw32-make -j12。
+    // F5启动任意调试配置前，也会自动执行本任务。
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build task",
+            "type": "shell",
+            "command": "mingw32-make",
+            "args": [
+                "-j12"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/c"
+                    ]
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
