@@ -41,9 +41,9 @@
 #define PITCH_MAX 0.35f // 云台限位 rad
 #define PITCH_MIN -0.3f
 // 发射参数
-#define ONE_BULLET_DELTA_ANGLE 80.0f    // 发射一发弹丸拨盘转动的距离,由机械设计图纸给出 测量值为84.17 理论值为80
-#define REDUCTION_RATIO_LOADER 19.0f // 2006拨盘电机的减速比,英雄需要修改为3508的19.0f
-#define NUM_PER_CIRCLE 10            // 拨盘一圈的装载量
+#define ONE_BULLET_DELTA_ANGLE 60.0f    // 发射一发弹丸拨盘转动的距离,由机械设计图纸给出,理论为60
+#define REDUCTION_RATIO_LOADER 40.0f // 2006拨盘电机的减速比,英雄需要修改为3508的19.0f,4340为40.0f
+#define NUM_PER_CIRCLE 6            // 拨盘一圈的装载量
 // 机器人底盘修改的参数,单位为mm(毫米)
 #define WHEEL_BASE 297              // 纵向轴距(前进后退方向)
 #define TRACK_WIDTH 297             // 横向轮距(左右平移方向)

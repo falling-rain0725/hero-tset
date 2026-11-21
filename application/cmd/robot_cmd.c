@@ -71,6 +71,7 @@ static Robot_Status_e robot_state; // 机器人整体工作状态
 static float Gimbal[2];
 static float tor[2];
 static float test_k;
+static int one_shoot = 0;
 
 // BMI088Instance *bmi088_test; // 云台IMU
 // BMI088_Data_t bmi088_data;
@@ -212,31 +213,44 @@ static void RemoteControlSet()
     shoot_cmd_send.shoot_mode = SHOOT_ON;
     shoot_cmd_send.load_mode = LOAD_STOP;
     shoot_cmd_send.friction_mode = FRICTION_OFF;
+    // if(fs_switch_is_up(rc_data->rc.SWD))
+    // {
+    //     if(!one_shoot){
+    //         one_shoot =1;
+    //     }
+    // }
+    // else if(fs_switch_is_down(rc_data->rc.SWD) && one_shoot)
+    // {
+    //     shoot_cmd_send.load_mode = LOAD_1_BULLET;
+    //     one_shoot = 0;
+    // }
 
     // SWB 拨至下位时连发，上位保持停止。
     if (fs_switch_is_down(rc_data->rc.SWB))
     {
-        shoot_cmd_send.load_mode = LOAD_BURSTFIRE;
-        shoot_cmd_send.shoot_rate = (float)abs(rc_data->rc.VRB - FS_VR_LOW + 10) / 150.0f;
-        // shoot_cmd_send.friction_mode = FRICTION_ON;
+        // shoot_cmd_send.load_mode = LOAD_BURSTFIRE;
+        // shoot_cmd_send.shoot_rate = (float)abs(rc_data->rc.VRB - FS_VR_LOW + 10) / 150.0f;
+        shoot_cmd_send.friction_mode = FRICTION_ON;
     }
 
     // 底盘模式选择
     if (fs_switch_is_up (rc_data->rc.SWC)) // 全向移动
     {
-        chassis_cmd_send.chassis_mode = CHASSIS_NO_FOLLOW;
-        chassis_cmd_send.wz = 0;
+        // chassis_cmd_send.chassis_mode = CHASSIS_NO_FOLLOW;
+        // chassis_cmd_send.wz = 0;
     }
     else if (fs_switch_is_mid (rc_data->rc.SWC)) // 跟随模式
     {
-        chassis_cmd_send.chassis_mode = CHASSIS_FOLLOW_GIMBAL_YAW;
-        chassis_cmd_send.wz = 0;
-        shoot_cmd_send.friction_mode = FRICTION_ON;
+        // chassis_cmd_send.chassis_mode = CHASSIS_FOLLOW_GIMBAL_YAW;
+        // chassis_cmd_send.wz = 0;
+        shoot_cmd_send.load_mode = LOAD_BURSTFIRE;
+        shoot_cmd_send.shoot_rate = (float)abs(rc_data->rc.VRB - FS_VR_LOW + 10) / 150.0f;
     }
     else if (fs_switch_is_down (rc_data->rc.SWC)) // 小陀螺
     {
-        chassis_cmd_send.chassis_mode = CHASSIS_ROTATE;
-        chassis_cmd_send.wz = (float)rc_data->rc.VRA * RC_TO_WZ_GAIN; // 用旋钮调整旋转速度
+        // chassis_cmd_send.chassis_mode = CHASSIS_ROTATE;
+        // chassis_cmd_send.wz = (float)rc_data->rc.VRA * RC_TO_WZ_GAIN; // 用旋钮调整旋转速度
+        // shoot_cmd_send.load_mode = LOAD_1_BULLET;
     }
 
     chassis_cmd_send.vy = (float)RC_APPLY_DEADZONE(rc_data->rc.rocker_l_) * RC_TO_V_GAIN; // 水平方向
@@ -348,24 +362,25 @@ void RobotCMDTask()
     {
         Control_Source_e current_control_source;
 
-        if (fs_switch_is_up(rc_data->rc.SWD))
-        {
-            current_control_source = CONTROL_SOURCE_REMOTE; // 遥控器控制
-        }
-        else if (fs_switch_is_down(rc_data->rc.SWD))
-        {
-            current_control_source = CONTROL_SOURCE_VISION; // 视觉控制
-        }
-        else
-        {
-            current_control_source = CONTROL_SOURCE_NONE;
-        }
+        // if (fs_switch_is_up(rc_data->rc.SWD))
+        // {
+        //     current_control_source = CONTROL_SOURCE_REMOTE; // 遥控器控制
+        // }
+        // else if (fs_switch_is_down(rc_data->rc.SWD))
+        // {
+        //     current_control_source = CONTROL_SOURCE_VISION; // 视觉控制
+        // }
+        // else
+        // {
+        //     current_control_source = CONTROL_SOURCE_NONE;
+        // }
 
-        if (current_control_source != last_control_source) // 处理模式切换 保护
-        {
-            SyncControlTargetToFeedback(); // 把控制目标同步到机器人当前的实际位置
-            last_control_source = current_control_source;
-        }
+        // if (current_control_source != last_control_source) // 处理模式切换 保护
+        // {
+        //     SyncControlTargetToFeedback(); // 把控制目标同步到机器人当前的实际位置
+        //     last_control_source = current_control_source;
+        // }
+        current_control_source = CONTROL_SOURCE_REMOTE; // 遥控器控制
 
         switch (current_control_source)
         {
